@@ -8,36 +8,36 @@ public class Main1 {
     public static void main(String[] args) {
 
         Random random = new Random();
-        int wylosowanaLiczba = random.nextInt(100) + 1;
-        int ilosc_prob = 0;
+        int randomNum = random.nextInt(100) + 1;
+        int numOfTrial = 0;
 
-        System.out.println("Wylosowałem liczbę, zgadnij jaką?");
+        System.out.println("Try to find a number which I have chosen. Good luck!");
 
         boolean win = false;
 
         while(!win) {
 
 
-            int liczba = wczytajliczbe();
-            ilosc_prob ++;
+            int number = getNumber();
+            numOfTrial ++;
 
-            if (liczba < wylosowanaLiczba) {
-                System.out.println("Podana liczba jest za mała");
-            } else if (liczba > wylosowanaLiczba) {
-                System.out.println("Podana liczba jest za duża");
+            if (number < randomNum) {
+                System.out.println("Your number is too small.");
+            } else if (number > randomNum) {
+                System.out.println("You number is too big.");
             } else {
-                System.out.println("Zgadłeś w " + ilosc_prob + " probie.");
+                System.out.println("You win! It was your " + numOfTrial + " trial.");
                 win = true;
             }
         }
     }
 
-    public static int wczytajliczbe(){
+    public static int getNumber(){
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj liczbę:");
+        System.out.println("Give a number:");
         while(!scanner.hasNextInt()){
-            System.out.println("Musisz podac liczbe");
+            System.out.println("Invalid value. You have to give a number.");
             scanner.nextLine();
         }
         return scanner.nextInt();
