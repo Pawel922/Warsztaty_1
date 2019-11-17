@@ -10,26 +10,33 @@ public class Main1 {
         Random random = new Random();
         int randomNum = random.nextInt(100) + 1;
         int numOfTrial = 0;
+        int maxNumOfTrial = 10;
 
-        System.out.println("Try to find a number which I have chosen. Good luck!");
+        System.out.println("I have chosen a number from range 1 to 100.\nTry to guess it in less than 10 trials! Good luck!");
 
-        boolean win = false;
+        while(numOfTrial <= maxNumOfTrial){
 
-        while(!win) {
+            numOfTrial ++;
 
+            if(numOfTrial == maxNumOfTrial){
+                System.out.println("It is your last chance");
+            } else if (numOfTrial > maxNumOfTrial){
+                System.out.println("It was your last chance! You lose! Try again.");
+                break;
+            }
 
             int number = getNumber();
-            numOfTrial ++;
 
             if (number < randomNum) {
                 System.out.println("Your number is too small.");
             } else if (number > randomNum) {
                 System.out.println("You number is too big.");
             } else {
-                System.out.println("You win! It was your " + numOfTrial + " trial.");
-                win = true;
+                System.out.println("You win! It was your " + ordinalNumber(numOfTrial) + " trial.");
+                break;
             }
         }
+
     }
 
     public static int getNumber(){
@@ -41,5 +48,24 @@ public class Main1 {
             scanner.nextLine();
         }
         return scanner.nextInt();
+    }
+
+    public static String ordinalNumber(int num){
+
+        String result;
+        switch (num){
+            case 1:
+                result = "1st";
+                break;
+            case 2:
+                result = "2nd";
+                break;
+            case 3:
+                result = "3rd";
+                break;
+            default:
+                result = String.format("%dth",num);
+        }
+        return result;
     }
 }
