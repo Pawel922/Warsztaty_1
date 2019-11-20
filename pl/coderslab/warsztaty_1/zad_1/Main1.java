@@ -1,5 +1,11 @@
 package pl.coderslab.warsztaty_1.zad_1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -33,9 +39,12 @@ public class Main1 {
                 System.out.println("You number is too big.");
             } else {
                 System.out.println("You win! It was your " + ordinalNumber(numOfTrial) + " trial.");
+                saveScores(numOfTrial);
                 break;
             }
         }
+
+        System.out.println(Arrays.toString(readScores()));
 
     }
 
@@ -68,4 +77,50 @@ public class Main1 {
         }
         return result;
     }
+
+    public static void saveScores(int score){
+
+        String[] lastScores = readScores();
+
+        String date = getDate();
+        String intToStr = String.valueOf(score);
+        String currentScore = date + "\t" + intToStr;
+
+        try{
+            PrintWriter printWriter = new PrintWriter("scores.txt");
+            for(String results : lastScores){
+                printWriter.println(results);
+            }
+            printWriter.println(currentScore);
+            printWriter.close();
+        } catch (FileNotFoundException e){
+            System.out.println("File does not exist");
+        }
+    }
+
+    public static String getDate(){
+
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dateString = dateFormat.format(currentDate);
+        return dateString;
+    }
+
+    public static String[] readScores(){
+
+        File file = new File("scores.txt");
+        String[] resultArray = {};
+
+        try{
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()){
+                resultArray = Arrays.copyOf(resultArray,resultArray.length + 1);
+                resultArray[resultArray.length - 1] = scanner.nextLine();
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("File does not exist");
+        }
+        return resultArray;
+    }
+
 }
