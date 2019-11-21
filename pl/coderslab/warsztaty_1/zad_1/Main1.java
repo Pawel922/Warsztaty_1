@@ -147,8 +147,8 @@ public class Main1 {
     public static boolean isScoresFileExist(){
 
         File file = new File("scores.txt");
-        return file.exists();
-
+        boolean ifExist = file.exists();
+        return ifExist;
     }
 
 }
