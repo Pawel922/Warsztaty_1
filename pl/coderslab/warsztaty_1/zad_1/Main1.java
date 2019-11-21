@@ -2,6 +2,7 @@ package pl.coderslab.warsztaty_1.zad_1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -39,13 +40,15 @@ public class Main1 {
                 System.out.println("You number is too big.");
             } else {
                 System.out.println("You win! It was your " + ordinalNumber(numOfTrial) + " trial.");
-                saveScores(numOfTrial);
+                if(isScoresFileExist()){
+                    saveScores(numOfTrial);
+                } else {
+                    createScoresFile();
+                    saveScores(numOfTrial);
+                }
                 break;
             }
         }
-
-        System.out.println(Arrays.toString(readScores()));
-
     }
 
     public static int getNumber(){
@@ -121,6 +124,31 @@ public class Main1 {
             System.out.println("File does not exist");
         }
         return resultArray;
+    }
+
+    public static void createScoresFile(){
+
+        File file = new File("scores.txt");
+        try{
+            boolean isCreated = file.createNewFile();
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println("dd-MM-yyyy" + "\t" + "Trials number");
+            printWriter.close();
+        }
+        catch (FileNotFoundException e){
+            System.out.println("File does not exist");
+        }
+        catch (IOException e){
+            System.out.println("Creating file fail");
+        }
+    }
+
+
+    public static boolean isScoresFileExist(){
+
+        File file = new File("scores.txt");
+        boolean isExist = file.exists();
+        return isExist;
     }
 
 }
