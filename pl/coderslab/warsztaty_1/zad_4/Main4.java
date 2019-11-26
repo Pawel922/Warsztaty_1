@@ -1,10 +1,13 @@
 package pl.coderslab.warsztaty_1.zad_4;
 
+import java.util.Scanner;
+
 public class Main4 {
 
     public static void main(String[] args) {
 
-        int score = rollDice("5D20-1");
+        String userAnswer = getAnswer();
+        int score = rollDice(userAnswer);
         System.out.println("Your score: " + score);
 
     }
@@ -48,5 +51,16 @@ public class Main4 {
             totalScore += singleScore;
         }
         return (totalScore + z);
+    }
+
+    public static String getAnswer(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please give an answer according to the formula:");
+        System.out.println("xDy+z \nwhere");
+        System.out.println("\t x  - number of rolling of dice");
+        System.out.println("\t Dy - type of dice (for example: D3, D10, D12, D100)");
+        System.out.println("\t z  - number added or subtracted to/from total score");
+        String answer = scanner.nextLine();
+        return answer;
     }
 }
