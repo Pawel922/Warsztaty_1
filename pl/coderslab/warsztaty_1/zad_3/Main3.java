@@ -10,6 +10,7 @@ public class Main3 {
 
         int minValue = 1;
         int maxValue = 1000;
+        int numOfTrial = 0;
         boolean isWinner = false;
         int guessNum = giveNumber(minValue,maxValue);
 
@@ -17,8 +18,9 @@ public class Main3 {
         System.out.println("As your computer, I will try to guess it maximally in 10 trial.");
         System.out.println("Let's start!");
 
-        while (true){
+        while (numOfTrial < 10){
 
+            numOfTrial ++;
             System.out.println("I guess: " + guessNum);
             userAnswer = takeUserAnswer();
             if(userAnswer.equals("you win")){
@@ -31,6 +33,9 @@ public class Main3 {
                 minValue = guessNum;
                 guessNum = giveNumber(minValue,maxValue);
             }
+            if(numOfTrial == 10){
+                System.out.println("You cheat me!");
+            }
         }
 
     }
@@ -38,7 +43,6 @@ public class Main3 {
     public static int giveNumber(int min, int max){
 
         return (int)(((max - min) / 2 ) + min);
-
     }
 
     public static String takeUserAnswer(){
@@ -53,9 +57,7 @@ public class Main3 {
             System.out.println("Do not cheat! Give a proper answer!");
             userAnswer = scanner.nextLine();
         }
-
         return userAnswer;
     }
-
 
 }
