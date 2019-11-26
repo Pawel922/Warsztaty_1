@@ -4,8 +4,8 @@ public class Main4 {
 
     public static void main(String[] args) {
 
-        int wynik = rollDice("5D20-1");
-        System.out.println(wynik);
+        int score = rollDice("5D20-1");
+        System.out.println("Your score: " + score);
 
     }
 
@@ -41,14 +41,12 @@ public class Main4 {
             z = 0;
         }
 
-        int wynik = 0;
+        int totalScore = 0;
 
         for(int i = 0; i < x; i++){
-            int wynikRzut = (int)(1 + Math.random() * y);
-            System.out.println((i+1) + " wynik: " + wynikRzut);
-            wynik += wynikRzut;
+            int singleScore = (int)(1 + Math.random() * y);
+            totalScore += singleScore;
         }
-        return wynik;
-
+        return (totalScore + z);
     }
 }
