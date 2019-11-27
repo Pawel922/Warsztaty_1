@@ -6,7 +6,16 @@ public class Main4 {
 
     public static void main(String[] args) {
 
+        System.out.println("Please give an answer according to the formula:");
+        System.out.println("xDy+z \nwhere");
+        System.out.println("\t x  - number of rolling of dice");
+        System.out.println("\t Dy - type of dice (for example: D3, D10, D12, D100)");
+        System.out.println("\t z  - number added or subtracted to/from total score");
         String userAnswer = getAnswer();
+        while (!isAnswerCorrect(userAnswer)){
+            System.out.println("Your formula is wrong. Correct it:");
+            userAnswer = getAnswer();
+        }
         int score = rollDice(userAnswer);
         System.out.println("Your score: " + score);
 
@@ -55,12 +64,64 @@ public class Main4 {
 
     public static String getAnswer(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please give an answer according to the formula:");
-        System.out.println("xDy+z \nwhere");
-        System.out.println("\t x  - number of rolling of dice");
-        System.out.println("\t Dy - type of dice (for example: D3, D10, D12, D100)");
-        System.out.println("\t z  - number added or subtracted to/from total score");
         String answer = scanner.nextLine();
         return answer;
+    }
+
+    public static boolean isAnswerCorrect(String answer){
+        boolean isCorrect = false;
+        if(isDSingle(answer) && (answer.length() > 2)){
+            String[] answerSplit = answer.split("D");
+            String firstPart  = answerSplit[0];
+            String secondPart = answerSplit[1];
+            if(isDigit(firstPart) || firstPart.equals("")){
+                if(secondPart.contains("+") || (secondPart.contains("-"))){
+                    String[] tempArray = splitBySign(secondPart);
+                    String beforeSign  = tempArray[0];
+                    String afterSing   = tempArray[1];
+                    if(isDigit(beforeSign)){
+                        if(isDigit(afterSing) || afterSing.equals("")){
+                            isCorrect = true;
+                        }
+                    }
+                } else if (isDigit(secondPart)){
+                    isCorrect = true;
+                }
+            }
+        }
+        return isCorrect;
+    }
+
+    public static boolean isDigit(String str){
+        try {
+            int number = Integer.parseInt(str);
+            return true;
+        } catch (IllegalArgumentException e){
+            return false;
+        }
+    }
+
+    public static String[] splitBySign(String str){
+        String[] resultArray;
+        if(str.contains("+")){
+            resultArray = str.split("\\+");
+        } else {
+            resultArray = str.split("-");
+        }
+        return resultArray;
+    }
+
+    public static boolean isDSingle(String str){
+        int count = 0;
+        for(char sign : str.toCharArray()){
+            if(sign == 'D'){
+                count ++;
+            }
+        }
+        if(count == 1){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
